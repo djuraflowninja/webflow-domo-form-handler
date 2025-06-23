@@ -478,7 +478,7 @@ function isGatedPage() {
       },
       onError() {
         console.log("⚠️ CP error → Eloqua fallback");
-        fallbackSubmitToEloqua(form, false);
+        //fallbackSubmitToEloqua(form, false);
       },
       onClose() {
         console.log("❌ CP closed → Eloqua fallback");
