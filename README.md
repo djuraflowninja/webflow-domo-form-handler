@@ -23,9 +23,9 @@ Custom JavaScript handler for enhancing Webflow forms with ChiliPiper integratio
 
 Use via CDN:
 
-```html
+<html>
 <script src="https://cdn.jsdelivr.net/gh/djuraflowninja/webflow-domo-form-handler@main/form-handler.js"></script>
-
+</html>
 
 🔧 How It Works
 Targets all forms with eloquaform="true" attribute.
