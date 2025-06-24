@@ -444,7 +444,7 @@ function isGatedPage() {
     if(!ok) return console.log("Please fix errors and try again.");
 
     await populateAll(form);
-    populateSubmissionFields(form);
+    await populateSubmissionFields(form);
 
     const formName = form.querySelector('[name="elqFormName"]')?.value;
     const country  = form.querySelector('[name="geoip_country_code"]')?.value;
