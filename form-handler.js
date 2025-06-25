@@ -148,8 +148,8 @@ fetch("https://api.ipify.org?format=json").then(r=>r.json())
 .then(r=>r.json()).then(data=>{
 form.querySelectorAll('input[name="geoip_country_code"]').forEach(i=>i.value=data.iso_code);
 if(data.iso_code==="CA"){
-  form.querySelectorAll(".consent-wrapper input").forEach(chk=>chk.removeAttribute("checked"));
-  form.querySelectorAll(".consent-wrapper").forEach(w=>w.style.display="flex");
+form.querySelectorAll(".consent-wrapper input").forEach(chk=>chk.removeAttribute("checked"));
+form.querySelectorAll(".consent-wrapper").forEach(w=>w.style.display="flex");
 }
 }).catch(e=>console.error("Error fetching Geo IP:",e));
 }
@@ -160,7 +160,7 @@ const cf = form.querySelector('input[name="contentURL1"]');
 if(cf){
 let v=cf.value.trim();
 if(v.toLowerCase()!=="noredirect" && !/^https?:\/\//.test(v)){
-  cf.value = origin + (v.startsWith("/")?v:"/"+v);
+cf.value = origin + (v.startsWith("/")?v:"/"+v);
 }
 }
 const pf = form.querySelector('input[name="pathName1"]');
@@ -177,10 +177,10 @@ if(uq) uq.value=Q;
 const tfi = form.querySelector('input[name="formSubmit1"]');
 if(tfi){
 const d=new Date(),D=String(d.getDate()).padStart(2,"0"),
-      M=String(d.getMonth()+1).padStart(2,"0"),Y=d.getFullYear(),
-      h=String(d.getHours()).padStart(2,"0"),
-      m=String(d.getMinutes()).padStart(2,"0"),
-      s=String(d.getSeconds()).padStart(2,"0");
+    M=String(d.getMonth()+1).padStart(2,"0"),Y=d.getFullYear(),
+    h=String(d.getHours()).padStart(2,"0"),
+    m=String(d.getMinutes()).padStart(2,"0"),
+    s=String(d.getSeconds()).padStart(2,"0");
 tfi.value=`${M}/${D}/${Y} ${h}:${m}:${s}`;
 }
 
@@ -199,7 +199,7 @@ if(ci1) ci1.value = getCanadaConsent(form);
 function pushFormDataToDataLayer(form) {
 window.dataLayer = window.dataLayer||[];
 const elems=form.querySelectorAll("input,select,textarea"),
-    data={};
+  data={};
 elems.forEach(el=>{
 if(!el.name) return;
 if(["submit","button","file"].includes(el.type)) return;
@@ -213,26 +213,26 @@ window.dataLayer=window.dataLayer||[];
 window.dataLayer.push({
 event:"DomoFormStart",
 eventModel:{
-  formId:form.querySelector('[name="elqFormName"]').value.trim(),
-  cta: form.querySelector('input[type="submit"]').value.trim()
+formId:form.querySelector('[name="elqFormName"]').value.trim(),
+cta: form.querySelector('input[type="submit"]').value.trim()
 }
 });
 }
 function pushFormStart(form){
 window.dataLayer=window.dataLayer||[];
 const fields=Array.from(form.querySelectorAll("input,select,textarea")),
-    first=fields[0]||{};
+  first=fields[0]||{};
 window.dataLayer.push({
 event:"form_start",
 eventModel:{
-  form_id: form.querySelector('[name="elqFormName"]').value.trim(),
-  form_name:null,
-  form_destination: form.querySelector('[name="contentURL1"]').value,
-  form_length: fields.length,
-  first_field_id:first.id,
-  first_field_name:first.name,
-  first_field_type:first.type,
-  first_field_position:first?1:undefined
+form_id: form.querySelector('[name="elqFormName"]').value.trim(),
+form_name:null,
+form_destination: form.querySelector('[name="contentURL1"]').value,
+form_length: fields.length,
+first_field_id:first.id,
+first_field_name:first.name,
+first_field_type:first.type,
+first_field_position:first?1:undefined
 }
 });
 }
@@ -242,12 +242,12 @@ const fields=Array.from(form.querySelectorAll("input,select,textarea"));
 window.dataLayer.push({
 event:"form_submit",
 eventModel:{
-  form_id: form.id.replace(/_form$/,"").replace(/_/g,"-"),
-  form_name:null,
-  form_destination: form.querySelector('[name="contentURL1"]').value,
-  form_length:fields.length,
-  form_submit_text: form.querySelector('input[type="submit"]').value.trim(),
-  event_callback:function(){}
+form_id: form.id.replace(/_form$/,"").replace(/_/g,"-"),
+form_name:null,
+form_destination: form.querySelector('[name="contentURL1"]').value,
+form_length:fields.length,
+form_submit_text: form.querySelector('input[type="submit"]').value.trim(),
+event_callback:function(){}
 }
 });
 }
@@ -291,34 +291,34 @@ function validateField(cfg){
 const v=cfg.element.value.trim(); let ok=false, err;
 switch(cfg.type){
 case"name":
-  if(!v) err="required";
-  else if(v.length<cfg.min) err="min";
-  else if(/(.)\1{3,}/.test(v)||!/^[A-Za-z\s]+$/.test(v)) err="invalid";
-  else ok=true; break;
+if(!v) err="required";
+else if(v.length<cfg.min) err="min";
+else if(/(.)\1{3,}/.test(v)||!/^[A-Za-z\s]+$/.test(v)) err="invalid";
+else ok=true; break;
 case"email":
-  if(!v) err="required";
-  else if(!/^[A-Za-z0-9](?:[A-Za-z0-9]|[.\-](?=[A-Za-z0-9])){3,}@(?:[A-Za-z0-9\-]+\.)+[A-Za-z0-9]{1,5}$/.test(v)) err="invalid";
-  else if(["gmail.com","yahoo.com","outlook.com","hotmail.com","aol.com","msn.com","ymail.com","comcast.net","live.com","protonmail.com"].includes(v.split("@")[1])) err="business";
-  else ok=true; break;
+if(!v) err="required";
+else if(!/^[A-Za-z0-9](?:[A-Za-z0-9]|[.\-](?=[A-Za-z0-9])){3,}@(?:[A-Za-z0-9\-]+\.)+[A-Za-z0-9]{1,5}$/.test(v)) err="invalid";
+else if(["gmail.com","yahoo.com","outlook.com","hotmail.com","aol.com","msn.com","ymail.com","comcast.net","live.com","protonmail.com"].includes(v.split("@")[1])) err="business";
+else ok=true; break;
 case"phone":
-  const norm=v.replace(/[^\d+]/g,""), digs=norm.replace(/\D/g,"");
-  if(!norm) err="required";
-  else if(digs.length<cfg.min) err="min";
-  else if(!/^(?!\+?(\d)\1+$)\+?\d{8,15}$/.test(norm)) err="invalid";
-  else ok=true; break;
+const norm=v.replace(/[^\d+]/g,""), digs=norm.replace(/\D/g,"");
+if(!norm) err="required";
+else if(digs.length<cfg.min) err="min";
+else if(!/^(?!\+?(\d)\1+$)\+?\d{8,15}$/.test(norm)) err="invalid";
+else ok=true; break;
 case"title":
-  if(!v) err="required";
-  else if(v.length<cfg.min) err="min";
-  else if(!/^[A-Za-z\s\/\-]+$/.test(v)||/(.)\1{3,}/.test(v)) err="invalid";
-  else ok=true; break;
+if(!v) err="required";
+else if(v.length<cfg.min) err="min";
+else if(!/^[A-Za-z\s\/\-]+$/.test(v)||/(.)\1{3,}/.test(v)) err="invalid";
+else ok=true; break;
 }
 const ct=cfg.element.parentElement, nx=ct.nextElementSibling;
 if(!ok){
 if(!nx||!nx.classList.contains("error-message")){
-  const e=document.createElement("div");
-  e.className="error-message";
-  e.textContent=cfg.messages[err];
-  ct.insertAdjacentElement("afterend",e);
+const e=document.createElement("div");
+e.className="error-message";
+e.textContent=cfg.messages[err];
+ct.insertAdjacentElement("afterend",e);
 } else nx.textContent=cfg.messages[err];
 } else if(nx&&nx.classList.contains("error-message")){
 nx.remove();
@@ -330,10 +330,10 @@ const v=sel.value, ct=sel.parentElement, nx=ct.nextElementSibling;
 const msg=(sel.getAttribute("errorlabel")||sel.name)+" is required.";
 if(!v){
 if(!nx||!nx.classList.contains("error-message")){
-  const e=document.createElement("div");
-  e.className="error-message";
-  e.textContent=msg;
-  ct.insertAdjacentElement("afterend",e);
+const e=document.createElement("div");
+e.className="error-message";
+e.textContent=msg;
+ct.insertAdjacentElement("afterend",e);
 } else nx.textContent=msg;
 return false;
 }
@@ -361,20 +361,20 @@ function attach(sel){ sel.addEventListener("change",()=>validateSelect(sel)); se
 function addF(){
 const wrap=sub.closest(".form-input-wrap");
 if(!form.querySelector("div[job-title-wrap]")){
-  wrap.insertAdjacentHTML("afterend",
-                          '<div job-title-wrap class="form-input-wrap"><div class="form-input-inner-wrap">'+
-                          '<select name="title" required class="input-relative" errorlabel="Job title">'+
-                          '<option value="">Job title</option><option value="CXO/EVP">CXO/EVP</option><option value="SVP/VP">SVP/VP</option><option value="Director">Director</option><option value="Manager">Manager</option><option value="Individual Contributor">Individual Contributor</option><option value="Student">Student</option>'+
-                          '</select></div></div>');
-  attach(form.querySelector('div[job-title-wrap] select[name="title"]'));
+wrap.insertAdjacentHTML("afterend",
+                        '<div job-title-wrap class="form-input-wrap"><div class="form-input-inner-wrap">'+
+                        '<select name="title" required class="input-relative" errorlabel="Job title">'+
+                        '<option value="">Job title</option><option value="CXO/EVP">CXO/EVP</option><option value="SVP/VP">SVP/VP</option><option value="Director">Director</option><option value="Manager">Manager</option><option value="Individual Contributor">Individual Contributor</option><option value="Student">Student</option>'+
+                        '</select></div></div>');
+attach(form.querySelector('div[job-title-wrap] select[name="title"]'));
 }
 if(!form.querySelector("div[department-wrap]")){
-  form.querySelector("div[job-title-wrap]").insertAdjacentHTML("afterend",
-                                                               '<div department-wrap class="form-input-wrap"><div class="form-input-inner-wrap">'+
-                                                               '<select name="department" required class="input-relative" errorlabel="Department">'+
-                                                               '<option value="">Department</option><option value="BI">BI</option><option value="Customer Service & Support">Customer Service & Support</option><option value="Engineering/Product Development">Engineering/Product Development</option><option value="Developer/Engineering">Developer/Engineering</option><option value="Human Resources">Human Resources</option><option value="IT">IT</option><option value="Marketing">Marketing</option><option value="Operations">Operations</option><option value="Sales">Sales</option><option value="Finance">Finance</option><option value="Other">Other</option>'+
-                                                               '</select></div></div>');
-  attach(form.querySelector('div[department-wrap] select[name="department"]'));
+form.querySelector("div[job-title-wrap]").insertAdjacentHTML("afterend",
+                                                             '<div department-wrap class="form-input-wrap"><div class="form-input-inner-wrap">'+
+                                                             '<select name="department" required class="input-relative" errorlabel="Department">'+
+                                                             '<option value="">Department</option><option value="BI">BI</option><option value="Customer Service & Support">Customer Service & Support</option><option value="Engineering/Product Development">Engineering/Product Development</option><option value="Developer/Engineering">Developer/Engineering</option><option value="Human Resources">Human Resources</option><option value="IT">IT</option><option value="Marketing">Marketing</option><option value="Operations">Operations</option><option value="Sales">Sales</option><option value="Finance">Finance</option><option value="Other">Other</option>'+
+                                                             '</select></div></div>');
+attach(form.querySelector('div[department-wrap] select[name="department"]'));
 }
 }
 function remF(){ form.querySelector("div[job-title-wrap]")?.remove(); form.querySelector("div[department-wrap]")?.remove(); }
@@ -416,16 +416,16 @@ body:data.toString()
 }).then(r=>{
 if(!r.ok) throw new Error(r.status);
 const ri=form.querySelector('[name="contentURL1"]')?.value.trim(),
-      wrapper=form.closest('.form-main-wrapper');
+    wrapper=form.closest('.form-main-wrapper');
 if(ri.toLowerCase()!=="noredirect" && /^https?:\/\//.test(ri) && redirectParam === true){
-  window.location.href = ri;
+window.location.href = ri;
 } else {
-  wrapper.querySelectorAll('[hide-on-submit]').forEach(el=>el.style.display='none');
-  wrapper.querySelectorAll('[show-on-submit]').forEach(el=>el.style.display='flex');
-  window.dataLayer=window.dataLayer||[];
-  window.dataLayer.push({ event:"form_success", form_id:form.id });
-  setGatedToken();
-  updateGatedContentVisibility();
+wrapper.querySelectorAll('[hide-on-submit]').forEach(el=>el.style.display='none');
+wrapper.querySelectorAll('[show-on-submit]').forEach(el=>el.style.display='flex');
+window.dataLayer=window.dataLayer||[];
+window.dataLayer.push({ event:"form_success", form_id:form.id });
+setGatedToken();
+updateGatedContentVisibility();
 }
 }).catch(err=>console.error("[Form] Fallback error",err));
 }
@@ -466,62 +466,75 @@ function initForm(form){
 populateAll(form);
 populateSubmissionFields(form);
 
+const emailInput = form.querySelector('input[name="email"]');
+const companyInput = form.querySelector('input[name="company"]');
+if (emailInput && companyInput) {
+  emailInput.addEventListener("blur", () => {
+    const emailVal = emailInput.value.trim();
+    if(emailVal.includes("@")){
+      companyInput.value = emailVal.split("@").pop();
+    } else {
+      companyInput.value = "";
+    }
+  });
+}
+
 ChiliPiper.deploy("domo-com", "talk-to-sales", {
 formType:       "HTML",
 fields: {
-  email:     "email",
-  firstName: "first_name",
-  lastName:  "last_name",
-  phone:     "phone",
-  title:     "title",
-  company:   "company",
-  domo_id: "domo_id",
-  sFDCCanadaEmailOptIn1: "sFDCCanadaEmailOptIn1",
-  sFDCCanadaEmailOptInOutDate1: "sFDCCanadaEmailOptInOutDate1",
-  geoip_country_code: "geoip_country_code",
-  formSubmit1: "formSubmit1",
-  gCLID1: "gCLID1",
-  uniqueFFID: "uniqueFFID",
-  marketingCloudID1: "marketingCloudID1",
-  utmquerystring1: "utmquerystring1",
-  pathName1: "pathName1",
-  rFCDMJunkReason1: "rFCDMJunkReason1",
-  language: "language",
-  originalUtmquerystring1: "originalUtmquerystring1",
-  utmCampaign1: "utmCampaign1",
-  utmCampid1: "utmCampid1",
-  utmGadposition1: "utmGadposition1",
-  utmGcreative1: "utmGcreative1",
-  utmGdevice1: "utmGdevice1",
-  utmGkeyword1: "utmGkeyword1",
-  utmGmatchtype1: "utmGmatchtype1",
-  utmGnetwork1: "utmGnetwork1",
-  utmGplacement1: "utmGplacement1",
-  utmGtarget1: "utmGtarget1",
-  utmMedium1: "utmMedium1",
-  utmOrgid1: "utmOrgid1",
-  utmSource1: "utmSource1",
-  g_id: "g_id"
+email:     "email",
+firstName: "first_name",
+lastName:  "last_name",
+phone:     "phone",
+title:     "title",
+company:   "company",
+domo_id: "domo_id",
+sFDCCanadaEmailOptIn1: "sFDCCanadaEmailOptIn1",
+sFDCCanadaEmailOptInOutDate1: "sFDCCanadaEmailOptInOutDate1",
+geoip_country_code: "geoip_country_code",
+formSubmit1: "formSubmit1",
+gCLID1: "gCLID1",
+uniqueFFID: "uniqueFFID",
+marketingCloudID1: "marketingCloudID1",
+utmquerystring1: "utmquerystring1",
+pathName1: "pathName1",
+rFCDMJunkReason1: "rFCDMJunkReason1",
+language: "language",
+originalUtmquerystring1: "originalUtmquerystring1",
+utmCampaign1: "utmCampaign1",
+utmCampid1: "utmCampid1",
+utmGadposition1: "utmGadposition1",
+utmGcreative1: "utmGcreative1",
+utmGdevice1: "utmGdevice1",
+utmGkeyword1: "utmGkeyword1",
+utmGmatchtype1: "utmGmatchtype1",
+utmGnetwork1: "utmGnetwork1",
+utmGplacement1: "utmGplacement1",
+utmGtarget1: "utmGtarget1",
+utmMedium1: "utmMedium1",
+utmOrgid1: "utmOrgid1",
+utmSource1: "utmSource1",
+g_id: "g_id"
 },
 
 onSuccess() {
-  console.log("✅ CP booking confirmed → Eloqua");
-  //fallbackSubmitToEloqua(form, false);
+console.log("✅ CP booking confirmed → Eloqua");
+//fallbackSubmitToEloqua(form, false);
 },
 onError() {
-  console.log("⚠️ CP error → Eloqua fallback");
-  //fallbackSubmitToEloqua(form, false);
+console.log("⚠️ CP error → Eloqua fallback");
+//fallbackSubmitToEloqua(form, false);
 },
 onClose() {
-  console.log("❌ CP closed → Eloqua fallback");
+console.log("❌ CP closed → Eloqua fallback");
 }
 });
 
 form.addEventListener("focusin",()=>{
 if(!form._started){
-  pushDomoFormStart(form);
-  pushFormStart(form);
-  form._started=true;
+pushDomoFormStart(form);
+pushFormStart(form);
+form._started=true;
 }
 });
 form.addEventListener("submit",handleSubmit);
