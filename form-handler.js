@@ -463,8 +463,8 @@ fallbackSubmitToEloqua(form, true);
 // --- INIT ---
 function initForm(form){
 
-await populateAll(form);
-await populateSubmissionFields(form);
+populateAll(form);
+populateSubmissionFields(form);
 
 ChiliPiper.deploy("domo-com", "talk-to-sales", {
 formType:       "HTML",
