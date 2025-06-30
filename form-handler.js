@@ -449,7 +449,7 @@ await populateSubmissionFields(form);
 
 const formName = form.querySelector('[name="elqFormName"]')?.value;
 const country  = form.querySelector('[name="geoip_country_code"]')?.value;
-const specialParam = new URLSearchParams(window.location.search).get("book")==="demo";
+const specialParam = new URLSearchParams(window.location.search).get("utm_campid")==="demo";
 const shouldTriggerChili = formName==="website_cta_talktosales" && (country==="US"||specialParam);
 
 if(shouldTriggerChili){
